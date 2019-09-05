@@ -3,25 +3,25 @@ Monitor Apache, Tomcat, IIS and FTP (IIS + Serv-U) with SCOM
 
 
 ### State View:
-![Webservice_State](https://raw.githubusercontent.com/Juanito99/Connect.APM.Foglight/master/PicturesForGitWebSite/Foglight_Scom_StateView.png)
+![Webservice_State](https://raw.githubusercontent.com/Juanito99/Windows.Server.Webservice.BasicWatcher/master/PicturesForGitWebSite/StateView.png)
 
 
 ### Performance Views:
-![Webservice_PerfLoad](https://raw.githubusercontent.com/Juanito99/Connect.APM.Foglight/master/PicturesForGitWebSite/Foglight_Scom_DiagramView.png)
+![Webservice_PerfLoad](https://raw.githubusercontent.com/Juanito99/Windows.Server.Webservice.BasicWatcher/master/PicturesForGitWebSite/PerformanceViewLoad.png)
 
-![Webservice_PerfUsers](https://raw.githubusercontent.com/Juanito99/Connect.APM.Foglight/master/PicturesForGitWebSite/Foglight_Scom_DiagramView.png)
+![Webservice_PerfUsers](https://raw.githubusercontent.com/Juanito99/Windows.Server.Webservice.BasicWatcher/master/PicturesForGitWebSite/PerformanceViewUsers.png)
 
 
 
 ### More information on:
-[Documentation](https://raw.githubusercontent.com/Juanito99/Connect.APM.Foglight/master/Documentation/ManagementPack-ConnectAPMFoglight-Introduction.pdf)
+[Documentation](https://github.com/Juanito99/Windows.Server.Webservice.BasicWatcher/blob/master/Documentation/ManagementPack-Webservice.BasicWatcher-Introduction.pdf)
 
 
 ### Downloads:
 
-[ManagementPack-XML](https://github.com/Juanito99/Connect.APM.Foglight/raw/master/Visual%20Studio%20Solution/obj/Debug/Connect.APM.Foglight.mp) 
+[ManagementPack-XML](https://github.com/Juanito99/Windows.Server.Webservice.BasicWatcher/blob/master/Windows.Server.Webservice.BasicWatcher/bin/Debug/Windows.Server.Webservice.BasicWatcher.xml) 
 
-[ManagementPack-MP](https://github.com/Juanito99/Connect.APM.Foglight/blob/master/Visual%20Studio%20Solution/obj/Debug/Connect.APM.Foglight.xml) 
+[ManagementPack-MP](https://github.com/Juanito99/Windows.Server.Webservice.BasicWatcher/blob/master/Windows.Server.Webservice.BasicWatcher/bin/Debug/Windows.Server.Webservice.BasicWatcher.mpb) 
 
 
 
