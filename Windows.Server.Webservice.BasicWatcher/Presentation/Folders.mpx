@@ -1,0 +1,39 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <Presentation>
+    <Folders>            
+      <Folder ID="Windows.Server.Webservice.BasicWatcher.Folders" Accessibility="Internal" ParentFolder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root" />
+      <Folder ID="Windows.Server.Webservice.BasicWatcher.Folders.HealthState" Accessibility="Internal" ParentFolder="Windows.Server.Webservice.BasicWatcher.Folders" />
+      <Folder ID="Windows.Server.Webservice.BasicWatcher.Folders.Alerts" Accessibility="Internal" ParentFolder="Windows.Server.Webservice.BasicWatcher.Folders" />
+      <Folder ID="Windows.Server.Webservice.BasicWatcher.Folders.Performance" Accessibility="Internal" ParentFolder="Windows.Server.Webservice.BasicWatcher.Folders" />          
+    </Folders>    
+  </Presentation>
+  
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Folders">
+          <Name>Windows Server Webservice BasicWatcher</Name>
+          <Description></Description>
+        </DisplayString>
+        
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Folders.HealthState">
+          <Name>HealthState</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Folders.Alerts">
+          <Name>Alerts</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Folders.Performance">
+          <Name>Performance</Name>
+          <Description></Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

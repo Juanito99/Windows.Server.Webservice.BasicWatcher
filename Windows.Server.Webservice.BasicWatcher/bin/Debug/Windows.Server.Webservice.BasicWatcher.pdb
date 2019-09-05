@@ -1,0 +1,143 @@
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer*6*10*ClassType
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.IIS*14*10*ClassType
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.Apache*15*10*ClassType
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat*16*10*ClassType
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS*18*10*ClassType
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU*19*10*ClassType
+Health Model\CustomModules.mpx*BasicWatcher.WebService.DataSource.KPIs.Cookdown*6*8*DataSourceModuleType
+Health Model\CustomModules.mpx*BasicWatcher.WebService.DataSource.IPConnections.Cookdown*40*8*DataSourceModuleType
+Health Model\CustomModules.mpx*Basic.WebService.SpecificCounterPerfFilterMapper*75*8*ConditionDetectionModuleType
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.FTP.ServU*6*8*Discovery
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.ApacheTomcat*80*8*Discovery
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.Apache*209*8*Discovery
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.IIS*338*8*Discovery
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.FTP.IIS*433*8*Discovery
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentProcessorTime*6*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.IODataMBPerSec*26*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.WorkingSetPrivateMB*46*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentProcessorTime*66*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.HandleCount*86*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.IPConnections*106*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.WorkingSetPrivateMB*126*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.IODataMBPerSec*146*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.WorkingSetPrivateMB*166*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IPConnections*186*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.HandleCount*206*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IODataMBPerSec*226*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.PercentProcessorTime*246*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.HandleCount*266*8*Rule
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.IPConnections*286*8*Rule
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat*6*8*UnitMonitor
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.Apache*68*8*UnitMonitor
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.ServU*130*8*UnitMonitor
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.IIS*192*8*UnitMonitor
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.IIS*254*8*UnitMonitor
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.Apache*6*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.ApacheTomcat*31*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.FTP.IIS*56*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.IIS*59*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.FTP.IIS*84*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.FTP.ServU*109*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.FTP.ServU*134*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.IIS*137*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.ApacheTomcat*140*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.Apache*143*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web*146*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.ApacheTomcat*149*8*View
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.Apache*152*8*View
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders*5*8*Folder
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders.HealthState*6*8*Folder
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders.Alerts*7*8*Folder
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders.Performance*8*8*Folder
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.Apache.FolderItem*157*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.ApacheTomcat.FolderItem*158*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.FTP.IIS.FolderItem*159*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.IIS.FolderItem*160*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.FTP.IIS.FolderItem*161*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.FTP.ServU.FolderItem*162*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.FTP.ServU.FolderItem*163*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.IIS.FolderItem*164*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.ApacheTomcat.FolderItem*165*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.Apache.FolderItem*166*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web.FolderItem*167*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.ApacheTomcat.FolderItem*168*8*FolderItem
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.Apache.FolderItem*169*8*FolderItem
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat.AlertMessage*320*8*StringResource
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.Apache.AlertMessage*321*8*StringResource
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.ServU.AlertMessage*322*8*StringResource
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.IIS.AlertMessage*323*8*StringResource
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.IIS.AlertMessage*324*8*StringResource
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat*330*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat.AlertMessage*334*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat*352*10*DisplayString*SubElementID*Error
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat*356*10*DisplayString*SubElementID*Warning
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat*360*10*DisplayString*SubElementID*Success
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.Apache*364*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.Apache.AlertMessage*368*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.Apache*386*10*DisplayString*SubElementID*Error
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.Apache*390*10*DisplayString*SubElementID*Warning
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.Apache*394*10*DisplayString*SubElementID*Success
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.ServU*398*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.ServU.AlertMessage*402*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.ServU*420*10*DisplayString*SubElementID*Error
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.ServU*424*10*DisplayString*SubElementID*Warning
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.ServU*428*10*DisplayString*SubElementID*Success
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.IIS*432*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.IIS.AlertMessage*436*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.IIS*454*10*DisplayString*SubElementID*Error
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.IIS*458*10*DisplayString*SubElementID*Warning
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.IIS*462*10*DisplayString*SubElementID*Success
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.IIS*466*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.IIS.AlertMessage*470*10*DisplayString
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.IIS*488*10*DisplayString*SubElementID*Error
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.IIS*492*10*DisplayString*SubElementID*Warning
+Health Model\Monitors.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Monitor.WebService.FTP.IIS*496*10*DisplayString*SubElementID*Success
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentProcessorTime*311*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.IODataMBPerSec*315*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.WorkingSetPrivateMB*319*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentProcessorTime*323*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.HandleCount*327*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.IPConnections*331*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.WorkingSetPrivateMB*335*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.IODataMBPerSec*339*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.WorkingSetPrivateMB*343*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IPConnections*347*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.HandleCount*351*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IODataMBPerSec*355*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.PercentProcessorTime*359*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.HandleCount*363*10*DisplayString
+Health Model\Rules.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Perf.Apache.IPConnections*367*10*DisplayString
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders*16*10*DisplayString
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders.HealthState*21*10*DisplayString
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders.Alerts*26*10*DisplayString
+Presentation\Folders.mpx*Windows.Server.Webservice.BasicWatcher.Folders.Performance*31*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.Apache*175*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.ApacheTomcat*179*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.FTP.IIS*183*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.Webservice.IIS*187*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.FTP.IIS*191*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.State.FTP.ServU*195*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.FTP.ServU*199*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.IIS*203*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.ApacheTomcat*207*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.Apache*211*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web*215*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.ApacheTomcat*219*10*DisplayString
+Presentation\Views.mptg.mpx*Windows.Server.Webservice.BasicWatcher.View.Perf.Apache*223*10*DisplayString
+Project.mpx*Windows.Server.Webservice.BasicWatcher*6*10*DisplayString
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer*31*10*DisplayString
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer*36*10*DisplayString*SubElementID*ComputerName
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer*41*10*DisplayString*SubElementID*Description
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer*46*10*DisplayString*SubElementID*WindowsVersion
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer*51*10*DisplayString*SubElementID*IP
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer*56*10*DisplayString*SubElementID*OU
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.IIS*61*10*DisplayString
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.Apache*66*10*DisplayString
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat*71*10*DisplayString
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS*76*10*DisplayString
+Service Model\Classes\Definitions.mpx*Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU*81*10*DisplayString
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.FTP.ServU*512*10*DisplayString
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.ApacheTomcat*516*10*DisplayString
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.Apache*520*10*DisplayString
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.IIS*524*10*DisplayString
+Service Model\Discoveries\Discoveries.mptg.mpx*Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.FTP.IIS*528*10*DisplayString

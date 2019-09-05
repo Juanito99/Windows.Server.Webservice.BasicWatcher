@@ -1,0 +1,91 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer" Base="Windows!Microsoft.Windows.ComputerRole" Accessibility="Public" Abstract="true" Hosted="true" Singleton="false">
+          <Property ID="ComputerName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="WindowsVersion" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Description" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="IP" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="OU" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />          
+        </ClassType>
+
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.IIS"  Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
+
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS"  Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />        
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU"  Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
+      
+      </ClassTypes>
+     
+      
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer">
+          <Name>Windows Server Webservice BasicWatcher Computer</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer" SubElementID="ComputerName">
+          <Name>Computer</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer" SubElementID="Description">
+          <Name>Description</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer" SubElementID="WindowsVersion">
+          <Name>WindowsVersion</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer" SubElementID="IP">
+          <Name>IP</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer" SubElementID="OU">
+          <Name>OU</Name>
+          <Description></Description>
+        </DisplayString>
+        
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS">
+          <Name>Windows Server Webservice BasicWatcher Computer - IIS</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.Apache">
+          <Name>Windows Server Webservice BasicWatcher Computer - Apache</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat">
+          <Name>Windows Server Webservice BasicWatcher Computer - ApacheTomcat</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS">
+          <Name>Windows Server Webservice BasicWatcher Computer - FTP IIS</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU">
+          <Name>Windows Server Webservice BasicWatcher Computer - FTP ServU</Name>
+          <Description></Description>
+        </DisplayString>
+  
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>
