@@ -1,5 +1,7 @@
 ﻿strServiceWildcard = WScript.Arguments(0)
 
+On Error Resume Next
+
 Set WshNetwork       = CreateObject("WScript.Network")
 ComputerName         = WshNetwork.ComputerName
 

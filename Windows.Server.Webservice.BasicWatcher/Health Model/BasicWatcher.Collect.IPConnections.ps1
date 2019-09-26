@@ -8,9 +8,9 @@ $WindowsVersion = Get-WmiObject -Class Win32_OperatingSystem | Select-Object -Ex
 $regIPPat       = '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
 
 try {
-	$computerDescription = Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\LanmanServer\Parameters | Select-Object -ExpandProperty srvcomment
+	$computerDescription = Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\LanmanServer\Parameters | Select-Object -ExpandProperty srvcomment -ErrorAction Stop
 } catch {
-	$computerDescription = [string]::Empty
+	$computerDescription = 'Not maintained.'
 }
 
 $localComputerDomain = ([System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain()).Name

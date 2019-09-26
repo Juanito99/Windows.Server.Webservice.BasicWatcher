@@ -1,0 +1,237 @@
+﻿Write-Host 'test'
+
+
+
+  <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+
+    <ModuleTypes>
+      <DataSourceModuleType ID="BasicWatcher.WebService.DataSource.KPIs.Cookdown" Accessibility="Internal" Batching="false">
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="MonitorItem" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime />
+              </DataSource>
+              <ProbeAction ID="Script" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagProbe">
+                <ScriptName>BasicWatcher.Collect.KPIs.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Health Model/BasicWatcher.Collect.KPIs.ps1$</ScriptBody>
+                <Parameters>
+                  <Parameter>
+                    <Name>MonitorItem</Name>
+                    <Value>$Config/MonitorItem$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>300</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="Script">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+    </ModuleTypes>
+
+
+    <MonitorTypes>
+      <UnitMonitorType ID="P2P.Custom.Elastic.Search.Index.IndexHealthMonitorType" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="UnderThreshold" NoDetection="false"/>
+          <MonitorTypeState ID="OverWarningThreshold" NoDetection="false"/>
+          <MonitorTypeState ID="OverErrorThreshold" NoDetection="false">            
+          </MonitorTypeState>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="MonitorItem" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="Counter" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="WarningThreshold" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="ErrorThreshold" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="WarningThreshold" Selector="$Config/WarningThreshold$" ParameterType="int"/>
+          <OverrideableParameter ID="ErrorThreshold" Selector="$Config/ErrorThreshold$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="GetIndexInfo" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <MonitorItem>$Config/MonitorItem$</MonitorItem>
+            </DataSource>
+            <ConditionDetection ID="FilterUnderThreshold" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Instance']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='InstanceName']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">$Config/Counter$</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='Counter']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">$Config/WarningThreshold$</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Less</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='Value']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="OverWarningThreshold" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Instance']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='InstanceName']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">$Config/Counter$</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='Counter']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  
+                  <Expression>
+                    <And>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">$Config/WarningThreshold$</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Greater</Operator>
+                        <ValueExpression>
+                          <Value Type="String">Property[@Name='Value']</Value>
+                        </ValueExpression>
+                      </SimpleExpression>  
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">$Config/ErrorThreshold$</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Less</Operator>
+                        <ValueExpression>
+                          <Value Type="String">Property[@Name='Value']</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </And>                    
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="ErrorThreshold" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Instance']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='InstanceName']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">$Config/Counter$</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='Counter']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">$Config/ErrorThreshold$</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Greater</Operator>
+                      <ValueExpression>
+                        <Value Type="String">Property[@Name='Value']</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="UnderThreshold">
+              <Node ID="FilterUnderThreshold">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="OverWarningThreshold">
+              <Node ID="FilterOverWarningThreshold">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="OverErrorThreshold">
+              <Node ID="FilterOverErrorThreshold">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+    </MonitorTypes>
+    
+  </TypeDefinitions>
+      
+</ManagementPackFragment>

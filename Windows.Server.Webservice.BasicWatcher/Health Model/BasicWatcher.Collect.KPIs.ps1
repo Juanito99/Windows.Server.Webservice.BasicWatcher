@@ -6,9 +6,9 @@ $testedAt            = "Tested on: $(Get-Date -Format u) / $(([TimeZoneInfo]::Lo
 $WindowsVersion      = Get-WmiObject -Class Win32_OperatingSystem | Select-Object -ExpandProperty Caption
 
 try {
-	$computerDescription = Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\LanmanServer\Parameters | Select-Object -ExpandProperty srvcomment
+	$computerDescription = Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\LanmanServer\Parameters | Select-Object -ExpandProperty srvcomment -ErrorAction Stop
 } catch {
-	$computerDescription = [string]::Empty
+	$computerDescription = 'Not maintained.'
 }
 
 $localComputerDomain = ([System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain()).Name
@@ -21,11 +21,11 @@ if (([string]::IsNullOrEmpty($computerDescription))) {
 }
 
 
-#$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',250,4,"On computer $($computerName) with searching for $($MonitorItem)")	
+$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',250,4,"On computer $($computerName) with searching for $($MonitorItem)")	
 
 if ($MonitorItem -eq 'svchost') {
 	
-#	$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',251,2,"On computer $($computerName) with searching for $($MonitorItem) - SVCHOST ")	
+	$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',251,2,"On computer $($computerName) with searching for $($MonitorItem) - SVCHOST ")	
 
 	$allSvcHostProc = Get-Process | Where-Object {$_.Name -eq $MonitorItem}
 
@@ -50,7 +50,7 @@ if ($MonitorItem -eq 'svchost') {
 $perfCounterReg  = '% processor time|working set \- private|io data bytes\/sec|handle count'
 $perfCounterList = New-Object -TypeName 'System.Collections.ArrayList'
 
-#$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',252,2,"On computer for $($MonitorItem) found No Counter: $($allPerCounter.count)")	
+$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',252,2,"On computer for $($MonitorItem) found No Counter: $($allPerCounter.count)")	
 
 $allPerfCounter | ForEach-Object {
     if ($_.Path -match $perfCounterReg) {
@@ -112,7 +112,7 @@ $perfCounterSum | ForEach-Object {
 	$sumi += "Location>$($_.Location)< CookedValue>$($_.CookedValue)< TypeOfCookedValue $($_.CookedValue.GetType())"
 	
 	if (($_.Location -ne $null -and ($_.Location.Gettype().Name -eq 'String' )) -and (($_.CookedValue -ne $null) -and ($_.CookedValue -match '\d'))) {		
-	#	$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',253,2,"On computer $($computerName) sending Bag with searching for $($MonitorItem)`n Bag: $($sumi)")	
+		$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',253,2,"On computer $($computerName) sending Bag with searching for $($MonitorItem)`n Bag: $($sumi)")	
 		$foo = 'bar'
 	} else {
 		$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',253,1,"On computer $($computerName) NOT SENDING Bag with searching for $($MonitorItem)`n Bag: $($sumi)")	
