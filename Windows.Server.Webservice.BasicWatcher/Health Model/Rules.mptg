@@ -2,12 +2,12 @@
   <Instances>
     <Instance ID="Instance5ad1d75d9c044806b12cf15b7824c1e4" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.Apache.PercentProcessorTime</Id>
-        <DisplayName>Collect Apache Percent Processor Time</DisplayName>
+        <Id>Perf.ServU.FTP.PercentMemoryUsed</Id>
+        <DisplayName>Collect Serv-U FTP Percent Memory Used</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU</Target>
         <Enabled>true</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -15,11 +15,11 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;serv-u&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
-        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentProcessorTime&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentMemoryUsed&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
         <ConditionDetectionId>CD</ConditionDetectionId>
         <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
         <WriteActions>
@@ -49,7 +49,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -70,8 +70,8 @@
     </Instance>
     <Instance ID="Instancef2badd1a09d34413a05cf956042bdc7c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.ApacheTomcat.WorkingSetPrivateMB</Id>
-        <DisplayName>Collect Apache Tomcat WorkingSet Private MB</DisplayName>
+        <Id>Perf.ApacheTomcat.PercentMemoryUsed</Id>
+        <DisplayName>Collect Apache Tomcat Percent Mermory Used</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
@@ -83,11 +83,11 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
-        <ConditionDetectionConfig>&lt;InterestingCounter&gt;WorkingSetPrivateMB&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentMemoryUsed&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
         <ConditionDetectionId>CD</ConditionDetectionId>
         <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
         <WriteActions>
@@ -104,12 +104,12 @@
     </Instance>
     <Instance ID="Instanceb763437ef10a4862a646ef788d6fa724" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.ApacheTomcat.PercentProcessorTime</Id>
-        <DisplayName>Collect ApacheTomcat Percent ProcessorTime</DisplayName>
+        <Id>Perf.IIS.FTP.PercentProcessorTime</Id>
+        <DisplayName>Collect IIS FTP Percent ProcessorTime</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS</Target>
         <Enabled>true</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -117,7 +117,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;svchost&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -151,7 +151,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -185,7 +185,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;300&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.IPConnections.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -206,12 +206,12 @@
     </Instance>
     <Instance ID="Instancea9b66d370ad4406084afd63ddc34162a" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.Apache.WorkingSetPrivateMB</Id>
-        <DisplayName>Collect Apache WorkingSetPrivate MB</DisplayName>
+        <Id>Perf.ServU.FTPWorkingSetPrivateMB</Id>
+        <DisplayName>Collect Serv-U FTP WorkingSetPrivate MB</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU</Target>
         <Enabled>true</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -219,7 +219,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;serv-u&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -240,12 +240,12 @@
     </Instance>
     <Instance ID="Instancecf4a0e0d68614d708877d6ac384d7651" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.Apache.IODataMBPerSec</Id>
-        <DisplayName>Collect Apache IO Data MB Per Sec</DisplayName>
+        <Id>Perf.ServU.FTP.IODataMBPerSec</Id>
+        <DisplayName>Collect Serv-U FTP IO Data MB Per Sec</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU</Target>
         <Enabled>false</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -253,7 +253,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;serv-u&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -273,13 +273,13 @@
       </CustomRuleConfig>
     </Instance>
     <Instance ID="Instance13af3a6fe30c4648b3f4a417d53e2edd" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
-      <CustomRuleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-        <Id>Perf.IIS.Web.WorkingSetPrivateMB</Id>
-        <DisplayName>Collect IIS Web WorkingSetPrivateMB</DisplayName>
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.IIS.FTP.PercentMemoryUsed</Id>
+        <DisplayName>Collect IIS FTP PercentMemoryUsed</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS</Target>
         <Enabled>true</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -287,11 +287,11 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;300&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;svchost&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
-        <ConditionDetectionConfig>&lt;InterestingCounter&gt;WorkingSetPrivateMB&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentMemoryUsed&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
         <ConditionDetectionId>CD</ConditionDetectionId>
         <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
         <WriteActions>
@@ -321,7 +321,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;300&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.IPConnections.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -342,12 +342,12 @@
     </Instance>
     <Instance ID="Instance2f8d3a60317845159d3313d63e19f288" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.Apache.HandleCount</Id>
-        <DisplayName>Collect Apache Handle Count</DisplayName>
+        <Id>Perf.ServU.FTP.HandleCount</Id>
+        <DisplayName>Collect Serv-U FTP Handle Count</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU</Target>
         <Enabled>false</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -355,7 +355,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;1800&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;serv-u&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -376,12 +376,12 @@
     </Instance>
     <Instance ID="Instance3db359c115604aef94e59352da5f0599" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.IIS.Web.IODataMBPerSec</Id>
-        <DisplayName>Collect IIS Web IODataMBPerSec</DisplayName>
+        <Id>Perf.IIS.FTP.IODataMBPerSec</Id>
+        <DisplayName>Collect IIS FTP IODataMBPerSec</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS</Target>
         <Enabled>false</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -389,7 +389,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;300&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;svchost&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -409,7 +409,7 @@
       </CustomRuleConfig>
     </Instance>
     <Instance ID="Instanceb3b6f0249d8743bfbfcfa87bbe91aa9d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
-      <CustomRuleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <Id>Perf.IIS.Web.PercentProcessorTime</Id>
         <DisplayName>Collect IIS Web Percent ProcessorTime</DisplayName>
         <Description>Description for the new rule</Description>
@@ -423,7 +423,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;300&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -444,12 +444,12 @@
     </Instance>
     <Instance ID="Instanceedc4e22d53f14d7081da3260d383e37b" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-        <Id>Perf.IIS.Web.HandleCount</Id>
-        <DisplayName>Collect IIS Web Handle Count</DisplayName>
+        <Id>Perf.IIS.FTP.HandleCount</Id>
+        <DisplayName>Collect IIS FTP Handle Count</DisplayName>
         <Description>Description for the new rule</Description>
         <Category>None</Category>
         <ConfirmDelivery>false</ConfirmDelivery>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS</Target>
         <Enabled>false</Enabled>
         <Remotable>true</Remotable>
         <Priority>Normal</Priority>
@@ -457,7 +457,7 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;300&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;svchost&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
@@ -478,6 +478,448 @@
     </Instance>
     <Instance ID="Instancef6152be2adf5469ca8109e13831851ae" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
       <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.IIS.FTP.IPConnections</Id>
+        <DisplayName>Collect IIS FTP Unique IPConnections</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;svchost&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.IPConnections.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;ipConnections&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance71584a89c8a648edbbb9e6adf617578e" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.ServU.FTP.PercentProcessorTime</Id>
+        <DisplayName>Collect Serv-U FTP Percent Processor Time</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;serv-u&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentProcessorTime&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance20b36d05a40f4ee99d492c1a91c39d39" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.ApacheTomcat.WorkingSetPrivateMB</Id>
+        <DisplayName>Collect Apache Tomcat WorkingSet Private MB</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;WorkingSetPrivateMB&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance990d007844424c1d8d6529d9864d0b7d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.IIS.FTP.WorkingSetPrivateMB</Id>
+        <DisplayName>Collect IIS FTP WorkingSetPrivateMB</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;svchost&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;WorkingSetPrivateMB&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance0f791d07556b4ca2ba4d75584c9f799a" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.ServU.FTP.IPConnections</Id>
+        <DisplayName>Collect Serv-U FTP Unique IPConnections</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;serv-u&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.IPConnections.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;ipConnections&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instanceec8302ef826349f19724333e81e8d5bc" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.IIS.Web.PercentMemoryUsed</Id>
+        <DisplayName>Collect IIS Web PercentMemoryUsed</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentMemoryUsed&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance2ed90911d7f445ddb4a6d7faf9c260cf" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.ApacheTomcat.PercentProcessorTime</Id>
+        <DisplayName>Collect ApacheTomcat Percent ProcessorTime</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;Tomcat&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentProcessorTime&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instancef7f7b8f29b4a42a2b6b0c5a226b7093a" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.IIS.Web.HandleCount</Id>
+        <DisplayName>Collect IIS Web Handle Count</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Enabled>false</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;HandleCount&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instancee80395b0522b42468b93ab6d0e3bd455" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.IIS.Web.IODataMBPerSec</Id>
+        <DisplayName>Collect IIS Web IODataMBPerSec</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Enabled>false</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;IODataMBPerSec&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance8ac73e22ecce459681e538fcd5dce2df" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.IIS.Web.WorkingSetPrivateMB</Id>
+        <DisplayName>Collect IIS Web WorkingSetPrivateMB</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;w3wp&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;WorkingSetPrivateMB&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance7b73966a55de42cfb8ab10b290f381c5" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.Apache.WorkingSetPrivateMB</Id>
+        <DisplayName>Collect Apache WorkingSetPrivate MB</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;WorkingSetPrivateMB&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance0ed7b83906bb4c65837f3b4159029469" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.Apache.PercentProcessorTime</Id>
+        <DisplayName>Collect Apache Percent Processor Time</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentProcessorTime&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance7bf7f697471a4a489dd62b3a22505158" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.Apache.PercentMemoryUsed</Id>
+        <DisplayName>Collect Apache Percent Memory Used</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;PercentMemoryUsed&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instancee13f56e6884840709c35b85a77556629" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <Id>Perf.Apache.IPConnections</Id>
         <DisplayName>Collect Apache Unique IPConnections</DisplayName>
         <Description>Description for the new rule</Description>
@@ -491,11 +933,79 @@
         <DataSources>
           <RuleDataSourceItem>
             <DataSourceId>DS</DataSourceId>
-            <DataSourceConfig>&lt;IntervalSeconds&gt;300&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
             <DataSourceType>BasicWatcher.WebService.DataSource.IPConnections.Cookdown</DataSourceType>
           </RuleDataSourceItem>
         </DataSources>
         <ConditionDetectionConfig>&lt;InterestingCounter&gt;ipConnections&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance4ff8764d841247c1bfab233e53a7fd3c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.Apache.IODataMBPerSec</Id>
+        <DisplayName>Collect Apache IO Data MB Per Sec</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Enabled>false</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;IODataMBPerSec&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
+        <WriteActions>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDB</WriteActionId>
+            <WriteActionType>SC!Microsoft.SystemCenter.CollectPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+          <RuleWriteActionItem>
+            <WriteActionId>WriteToDW</WriteActionId>
+            <WriteActionType>MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData</WriteActionType>
+          </RuleWriteActionItem>
+        </WriteActions>
+      </CustomRuleConfig>
+    </Instance>
+    <Instance ID="Instance18e24641274d436ca914e5d6b56b6184" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomRule" Version="1.0.0.0">
+      <CustomRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Perf.Apache.HandleCount</Id>
+        <DisplayName>Collect Apache Handle Count</DisplayName>
+        <Description>Description for the new rule</Description>
+        <Category>None</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Enabled>false</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <DataSources>
+          <RuleDataSourceItem>
+            <DataSourceId>DS</DataSourceId>
+            <DataSourceConfig>&lt;IntervalSeconds&gt;900&lt;/IntervalSeconds&gt;&lt;MonitorItem&gt;httpd&lt;/MonitorItem&gt;</DataSourceConfig>
+            <DataSourceType>BasicWatcher.WebService.DataSource.KPIs.Cookdown</DataSourceType>
+          </RuleDataSourceItem>
+        </DataSources>
+        <ConditionDetectionConfig>&lt;InterestingCounter&gt;HandleCount&lt;/InterestingCounter&gt;&lt;ObjectName&gt;$Data/Property[@Name='Objekt']$&lt;/ObjectName&gt;&lt;CounterName&gt;$Data/Property[@Name='Counter']$&lt;/CounterName&gt;&lt;InstanceName&gt;$Data/Property[@Name='Instance']$&lt;/InstanceName&gt;&lt;Value&gt;$Data/Property[@Name='Value']$&lt;/Value&gt;</ConditionDetectionConfig>
         <ConditionDetectionId>CD</ConditionDetectionId>
         <ConditionDetectionType>Basic.WebService.SpecificCounterPerfFilterMapper</ConditionDetectionType>
         <WriteActions>

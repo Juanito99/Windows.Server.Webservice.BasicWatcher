@@ -106,6 +106,22 @@ $perfCounterList | Group-Object -Property Location | ForEach-Object {
     $null       = $perfCounterSum.Add($perfSumObj)
 }
 
+
+$availableRamRaw = (systeminfo | Select-String 'Total Physical Memory:').ToString().Split(':')[1].Trim()
+$availableMBRam  = $availableRamRaw -replace('MB','') 
+$availableMBRam  = $availableMBRam -replace(' ','') 
+$availableMBRam  = $availableMBRam -replace(',','')
+$availableMBRam  = $availableMBRam -replace('\.','')
+
+$onePercentRam  = 100 / $availableMBRam 
+$usedPercentRam = $onePercentRam * ($perfCounterSum.GetEnumerator() | Where-Object {$_.Location -eq 'WorkingSetPrivateMB'} | Select-Object -ExpandProperty CookedValue)
+$usedPercentRam = [Math]::Round($usedPercentRam)
+
+$perfSumHash = @{'Location' = 'PercentMemoryUsed'}
+$perfSumHash.Add('CookedValue', $usedPercentRam)
+$perfSumObj = New-Object -TypeName PSObject -Property $perfSumHash
+$null       = $perfCounterSum.Add($perfSumObj)
+
 $perfCounterSum | ForEach-Object {
 
 	$sumi  = "ComputerName>$($ComputerName)< testedAt>$($testedAt)< WindowsVersion>$($WindowsVersion)< ComputerDescription>$($computerDescription)<"
@@ -118,7 +134,7 @@ $perfCounterSum | ForEach-Object {
 		$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',253,1,"On computer $($computerName) NOT SENDING Bag with searching for $($MonitorItem)`n Bag: $($sumi)")	
 		continue 
 	}	
-			                  
+			                   
 	$objekt = $MonitorItem + '.' + 'Info'
 
 	$bag = $api.CreatePropertybag()						                  
@@ -126,7 +142,7 @@ $perfCounterSum | ForEach-Object {
 	$bag.AddValue("WindowsVersion",$WindowsVersion)		               
 	$bag.AddValue("ComputerDescription",$computerDescription)	
 	$bag.AddValue('Counter',$_.Location)
-	$bag.AddValue('Value',$_.CookedValue)
+	$bag.AddValue('Value',$_.CookedValue) 
 	$bag.AddValue('Instance',$ComputerName)
 	$bag.AddValue('Objekt',$objekt)
 	$bag

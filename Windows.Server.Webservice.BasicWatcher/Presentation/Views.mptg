@@ -1,7 +1,7 @@
 <TemplateGroup>
   <Instances>
     <Instance ID="Instance8f2c7f93b86644e28a5271a4f0c2c2e6" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.HealthState</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.StateViewType</ViewType>
         <ViewConfiguration>&lt;Presentation&gt;&lt;ColumnInfo Index="0" Grouped="false" IsSortable="true" Sorted="true" SortIndex="0" Visible="true" SortOrder="Descending" Width="120"&gt;&lt;Name&gt;Webservice State&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer.Apache&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="1" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="180"&gt;&lt;Name&gt;ComputerName&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/ComputerName&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="2" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="220"&gt;&lt;Name&gt;WindowsVersion&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/WindowsVersion&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="3" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;Description&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/Description&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="4" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;OU&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/OU&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;/Presentation&gt;</ViewConfiguration>
@@ -15,7 +15,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance4f6a8baf6a93433e84c0e23a90b6257d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.HealthState</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.StateViewType</ViewType>
         <ViewConfiguration>&lt;Presentation&gt;&lt;ColumnInfo Index="0" Grouped="false" IsSortable="true" Sorted="true" SortIndex="0" Visible="true" SortOrder="Descending" Width="120"&gt;&lt;Name&gt;Webservice State&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="1" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="180"&gt;&lt;Name&gt;ComputerName&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/ComputerName&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="2" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="220"&gt;&lt;Name&gt;WindowsVersion&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/WindowsVersion&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="3" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;Description&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/Description&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="4" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;OU&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/OU&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;/Presentation&gt;</ViewConfiguration>
@@ -29,7 +29,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance996e12a56b634b2bb74b2764907e0ef6" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Alerts</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.AlertViewType</ViewType>
         <Visible>true</Visible>
@@ -42,7 +42,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance2fcf936912864941b99f4ca9410d112e" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.HealthState</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.StateViewType</ViewType>
         <ViewConfiguration>&lt;Presentation&gt;&lt;ColumnInfo Index="0" Grouped="false" IsSortable="true" Sorted="true" SortIndex="0" Visible="true" SortOrder="Descending" Width="120"&gt;&lt;Name&gt;Webservice State&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer.IIS&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="1" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="180"&gt;&lt;Name&gt;ComputerName&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/ComputerName&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="2" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="220"&gt;&lt;Name&gt;WindowsVersion&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/WindowsVersion&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="3" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;Description&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/Description&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="4" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;OU&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/OU&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;/Presentation&gt;</ViewConfiguration>
@@ -56,7 +56,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instanceb4912f33ed1d4ae2ae87b067c59ed265" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.HealthState</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.StateViewType</ViewType>
         <ViewConfiguration>&lt;Presentation&gt;&lt;ColumnInfo Index="0" Grouped="false" IsSortable="true" Sorted="true" SortIndex="0" Visible="true" SortOrder="Descending" Width="120"&gt;&lt;Name&gt;Webservice State&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="1" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="180"&gt;&lt;Name&gt;ComputerName&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/ComputerName&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="2" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="220"&gt;&lt;Name&gt;WindowsVersion&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/WindowsVersion&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="3" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;Description&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/Description&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="4" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;OU&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/OU&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;/Presentation&gt;</ViewConfiguration>
@@ -70,7 +70,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance291e0d4b35774ab7becc31caa5b32a68" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.HealthState</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.StateViewType</ViewType>
         <ViewConfiguration>&lt;Presentation&gt;&lt;ColumnInfo Index="0" Grouped="false" IsSortable="true" Sorted="true" SortIndex="0" Visible="true" SortOrder="Descending" Width="120"&gt;&lt;Name&gt;Webservice State&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="1" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="180"&gt;&lt;Name&gt;ComputerName&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/ComputerName&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="2" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="220"&gt;&lt;Name&gt;WindowsVersion&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/WindowsVersion&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="3" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;Description&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/Description&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;ColumnInfo Index="4" Grouped="false" IsSortable="true" Sorted="false" SortIndex="0" Visible="true" SortOrder="Ascending" Width="420"&gt;&lt;Name&gt;OU&lt;/Name&gt;&lt;Id&gt;Windows.Server.Webservice.BasicWatcher.Computer/OU&lt;/Id&gt;&lt;/ColumnInfo&gt;&lt;/Presentation&gt;</ViewConfiguration>
@@ -84,7 +84,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance1be5b0246ae748a68ec0063ea795572f" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Alerts</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.AlertViewType</ViewType>
         <Visible>true</Visible>
@@ -97,7 +97,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance391fddd91fe84b109e3456134d9bf05b" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Alerts</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.AlertViewType</ViewType>
         <Visible>true</Visible>
@@ -110,7 +110,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance09c49fed258d414b8676f41b50ef9e07" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Alerts</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.AlertViewType</ViewType>
         <Visible>true</Visible>
@@ -123,7 +123,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance82c51b6d50614a19956cd62577d01991" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Alerts</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.AlertViewType</ViewType>
         <Visible>true</Visible>
@@ -141,15 +141,15 @@
         <ViewType>SC!Microsoft.SystemCenter.PerformanceViewType</ViewType>
         <Visible>true</Visible>
         <Accessibility>Internal</Accessibility>
-        <Id>View.Perf.IIS.Web</Id>
-        <DisplayName>Web - IIS</DisplayName>
+        <Id>View.Perf.ServU.FTP</Id>
+        <DisplayName>FTP - Serv-U</DisplayName>
         <Description>Description for the new view</Description>
-        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU</Target>
         <Category>Operations</Category>
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instance30838d502b7c4408b50d636170184a53" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Performance</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.PerformanceViewType</ViewType>
         <Visible>true</Visible>
@@ -162,7 +162,7 @@
       </CustomViewConfig>
     </Instance>
     <Instance ID="Instancee989f261407e4faf89c6481b4292d71c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
-      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Performance</ViewFolder>
         <ViewType>SC!Microsoft.SystemCenter.PerformanceViewType</ViewType>
         <Visible>true</Visible>
@@ -171,6 +171,32 @@
         <DisplayName>Web - Apache</DisplayName>
         <Description>Description for the new view</Description>
         <Target>Windows.Server.Webservice.BasicWatcher.Computer.Apache</Target>
+        <Category>Operations</Category>
+      </CustomViewConfig>
+    </Instance>
+    <Instance ID="Instance54f1b589f8a343fc81ff43467cd61009" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
+      <CustomViewConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Performance</ViewFolder>
+        <ViewType>SC!Microsoft.SystemCenter.PerformanceViewType</ViewType>
+        <Visible>true</Visible>
+        <Accessibility>Internal</Accessibility>
+        <Id>View.Perf.IIS.Web</Id>
+        <DisplayName>Web - IIS</DisplayName>
+        <Description>Description for the new view</Description>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.IIS</Target>
+        <Category>Operations</Category>
+      </CustomViewConfig>
+    </Instance>
+    <Instance ID="Instancec328c1bdfe884937a0c1ee1814b9abef" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomView" Version="1.0.0.0">
+      <CustomViewConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <ViewFolder>Windows.Server.Webservice.BasicWatcher.Folders.Performance</ViewFolder>
+        <ViewType>SC!Microsoft.SystemCenter.PerformanceViewType</ViewType>
+        <Visible>true</Visible>
+        <Accessibility>Internal</Accessibility>
+        <Id>View.Perf.IIS.FTP</Id>
+        <DisplayName>FTP - IIS</DisplayName>
+        <Description>Description for the new view</Description>
+        <Target>Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS</Target>
         <Category>Operations</Category>
       </CustomViewConfig>
     </Instance>

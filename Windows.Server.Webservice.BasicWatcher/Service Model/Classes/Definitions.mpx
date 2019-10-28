@@ -8,12 +8,25 @@
           <Property ID="WindowsVersion" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="Description" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="IP" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="OU" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />          
+          <Property ID="OU" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcUserName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
 
-        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.IIS"  Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
-        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
-        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.IIS"  Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="SvcMajorVersion" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcMinorVersion" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcVersionCombined" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">          
+          <Property ID="SvcDisplayName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcDescription" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">        
+          <Property ID="SvcDisplayName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcDescription" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
 
         <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS"  Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />        
         <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU"  Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
@@ -57,9 +70,30 @@
           <Name>OU</Name>
           <Description></Description>
         </DisplayString>
-        
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer" SubElementID="SvcUserName">
+          <Name>Service User Name</Name>
+          <Description></Description>
+        </DisplayString>
+
+
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS">
           <Name>Windows Server Webservice BasicWatcher Computer - IIS</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" SubElementID="SvcMajorVersion">
+          <Name>Service Major Version</Name>
+          <Description></Description>
+        </DisplayString>
+        
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" SubElementID="SvcMinorVersion">
+          <Name>Service Minor Version</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" SubElementID="SvcVersionCombined">
+          <Name>Service Version</Name>
           <Description></Description>
         </DisplayString>
 
@@ -68,11 +102,31 @@
           <Description></Description>
         </DisplayString>
 
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" SubElementID="SvcDescription">
+          <Name>Service Description</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" SubElementID="SvcDisplayName">
+          <Name>Service DisplayName</Name>
+          <Description></Description>
+        </DisplayString>
+        
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat">
           <Name>Windows Server Webservice BasicWatcher Computer - ApacheTomcat</Name>
           <Description></Description>
         </DisplayString>
 
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" SubElementID="SvcDescription">
+          <Name>Service Description</Name>
+          <Description></Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" SubElementID="SvcDisplayName">
+          <Name>Service DisplayName</Name>
+          <Description></Description>
+        </DisplayString>
+       
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS">
           <Name>Windows Server Webservice BasicWatcher Computer - FTP IIS</Name>
           <Description></Description>

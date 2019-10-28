@@ -3,7 +3,7 @@
   <Manifest>
     <Identity>
       <ID>Windows.Server.Webservice.BasicWatcher</ID>
-      <Version>1.0.0.250</Version>
+      <Version>1.0.0.284</Version>
     </Identity>
     <Name>Windows.Server.Webservice.BasicWatcher [Apache, Tomcat, IIS]</Name>
     <References>
@@ -48,10 +48,21 @@
           <Property ID="Description" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="IP" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="OU" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcUserName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
-        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
-        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
-        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="SvcMajorVersion" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcMinorVersion" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcVersionCombined" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="SvcDisplayName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcDescription" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+        <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="SvcDisplayName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="SvcDescription" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
         <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
         <ClassType ID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" Base="Windows.Server.Webservice.BasicWatcher.Computer" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false" />
       </ClassTypes>
@@ -179,6 +190,22 @@ $perfCounterList | Group-Object -Property Location | ForEach-Object {
     $null       = $perfCounterSum.Add($perfSumObj)
 }
 
+
+$availableRamRaw = (systeminfo | Select-String 'Total Physical Memory:').ToString().Split(':')[1].Trim()
+$availableMBRam  = $availableRamRaw -replace('MB','') 
+$availableMBRam  = $availableMBRam -replace(' ','') 
+$availableMBRam  = $availableMBRam -replace(',','')
+$availableMBRam  = $availableMBRam -replace('\.','')
+
+$onePercentRam  = 100 / $availableMBRam 
+$usedPercentRam = $onePercentRam * ($perfCounterSum.GetEnumerator() | Where-Object {$_.Location -eq 'WorkingSetPrivateMB'} | Select-Object -ExpandProperty CookedValue)
+$usedPercentRam = [Math]::Round($usedPercentRam)
+
+$perfSumHash = @{'Location' = 'PercentMemoryUsed'}
+$perfSumHash.Add('CookedValue', $usedPercentRam)
+$perfSumObj = New-Object -TypeName PSObject -Property $perfSumHash
+$null       = $perfCounterSum.Add($perfSumObj)
+
 $perfCounterSum | ForEach-Object {
 
 	$sumi  = "ComputerName>$($ComputerName)< testedAt>$($testedAt)< WindowsVersion>$($WindowsVersion)< ComputerDescription>$($computerDescription)<"
@@ -191,7 +218,7 @@ $perfCounterSum | ForEach-Object {
 		$api.LogScriptEvent('BasicWatcher.Collect.KPIs.ps1',253,1,"On computer $($computerName) NOT SENDING Bag with searching for $($MonitorItem)`n Bag: $($sumi)")	
 		continue 
 	}	
-			                  
+			                   
 	$objekt = $MonitorItem + '.' + 'Info'
 
 	$bag = $api.CreatePropertybag()						                  
@@ -199,7 +226,7 @@ $perfCounterSum | ForEach-Object {
 	$bag.AddValue("WindowsVersion",$WindowsVersion)		               
 	$bag.AddValue("ComputerDescription",$computerDescription)	
 	$bag.AddValue('Counter',$_.Location)
-	$bag.AddValue('Value',$_.CookedValue)
+	$bag.AddValue('Value',$_.CookedValue) 
 	$bag.AddValue('Instance',$ComputerName)
 	$bag.AddValue('Objekt',$objekt)
 	$bag
@@ -350,7 +377,14 @@ $netStatIPConnects = New-Object -TypeName System.Collections.Generic.List[object
 Format-NetstatData -netstatInPut $netStatIp -nestatIPData ([ref]$netStatIPConnects)
 
 $ipConnections = ''
-$ipConnections = $netStatIPConnects | Where-Object {$_.procPath -match "(?i)[\\]$MonitorItem" -or $_.procName  -match "(?i)$MonitorItem"}
+
+#if svchost - check for port, otherwise use name to find the right process
+if ($MonitorItem -ieq 'svchost') {
+	$ipConnections = $netStatIPConnects | Where-Object {$_.localPort -eq "21"}
+} else {
+	$ipConnections = $netStatIPConnects | Where-Object {$_.procPath -match "(?i)[\\]$MonitorItem" -or $_.procName  -match "(?i)$MonitorItem"}
+}
+
 
 if ($ipConnections -ne '') {	
 	#$api.LogScriptEvent('BasicWatcher.Collect.IPConnections.ps1',351,4,"Searching for $($MonitorItem) found no: $($ipConnections.Count) IPConnections")	
@@ -460,7 +494,7 @@ $bag]]></ScriptBody>
   </TypeDefinitions>
   <Monitoring>
     <Discoveries>
-      <Discovery ID="Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.FTP.ServU" Target="Windows!Microsoft.Windows.Computer" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+      <Discovery ID="Windows.Server.Webservice.BasicWatcher.Discovery.Windows.Server.Webservice.Computer.FTP.ServU" Target="Windows!Microsoft.Windows.Computer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
         <Category>Discovery</Category>
         <DiscoveryTypes>
           <DiscoveryClass TypeID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" />
@@ -578,6 +612,78 @@ $bag]]></ScriptBody>
               <PathType>1</PathType>
               <AttributeType>1</AttributeType>
             </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName6</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat6\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName7</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat7\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName8</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat8\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName9</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat9\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription6</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat6\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription7</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat7\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription8</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat8\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription9</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat9\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName6</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat6\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName7</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat7\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName8</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat8\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName9</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Tomcat9\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
           </RegistryAttributeDefinitions>
           <Frequency>86400</Frequency>
           <ClassId>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat"]$</ClassId>
@@ -610,6 +716,18 @@ $bag]]></ScriptBody>
               <Setting>
                 <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer"]/OU$</Name>
                 <Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/OrganizationalUnit$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat"]/SvcDisplayName$</Name>
+                <Value>$Data/Values/SvcDisplayName6$ $Data/Values/SvcDisplayName7$ $Data/Values/SvcDisplayName8$ $Data/Values/SvcDisplayName9$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat"]/SvcDescription$</Name>
+                <Value>$Data/Values/SvcDescription6$ $Data/Values/SvcDescription7$ $Data/Values/SvcDescription8$ $Data/Values/SvcDescription9$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer"]/SvcUserName$</Name>
+                <Value>$Data/Values/SvcUserName6$ $Data/Values/SvcUserName7$ $Data/Values/SvcUserName8$ $Data/Values/SvcUserName9$</Value>
               </Setting>
             </Settings>
           </InstanceSettings>
@@ -696,6 +814,18 @@ $bag]]></ScriptBody>
               <AttributeType>0</AttributeType>
             </RegistryAttributeDefinition>
             <RegistryAttributeDefinition>
+              <AttributeName>KeyExists13</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache1.3</Path>
+              <PathType>0</PathType>
+              <AttributeType>0</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>KeyExists</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache</Path>
+              <PathType>0</PathType>
+              <AttributeType>0</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
               <AttributeName>WindowsVersion</AttributeName>
               <Path>SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProductName</Path>
               <PathType>1</PathType>
@@ -704,6 +834,96 @@ $bag]]></ScriptBody>
             <RegistryAttributeDefinition>
               <AttributeName>Description</AttributeName>
               <Path>SYSTEM\CurrentControlSet\services\LanmanServer\Parameters\srvcomment</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName24</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.4\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName22</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.2\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName20</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.0\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName13</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache1.3\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDisplayName</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache\DisplayName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription24</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.4\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription22</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.2\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription20</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.0\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription13</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache1.3\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcDescription</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache\Description</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName24</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.4\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName22</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.2\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName20</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache2.0\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName13</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache1.3\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\services\Apache\ObjectName</Path>
               <PathType>1</PathType>
               <AttributeType>1</AttributeType>
             </RegistryAttributeDefinition>
@@ -739,6 +959,18 @@ $bag]]></ScriptBody>
               <Setting>
                 <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer"]/OU$</Name>
                 <Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/OrganizationalUnit$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.Apache"]/SvcDisplayName$</Name>
+                <Value>$Data/Values/SvcDisplayName24$ $Data/Values/SvcDisplayName22$ $Data/Values/SvcDisplayName20$ $Data/Values/SvcDisplayName13$ $Data/Values/SvcDisplayName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.Apache"]/SvcDescription$</Name>
+                <Value>$Data/Values/SvcDescription24$ $Data/Values/SvcDescription22$ $Data/Values/SvcDescription20$ $Data/Values/SvcDescription13$ $Data/Values/SvcDescription$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer"]/SvcUserName$</Name>
+                <Value>$Data/Values/SvcUserName24$ $Data/Values/SvcUserName22$ $Data/Values/SvcUserName20$ $Data/Values/SvcUserName13$ $Data/Values/SvcUserName$</Value>
               </Setting>
             </Settings>
           </InstanceSettings>
@@ -788,6 +1020,28 @@ $bag]]></ScriptBody>
                   </ValueExpression>
                 </SimpleExpression>
               </Expression>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery>Values/KeyExists13</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value>true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery>Values/KeyExists</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value>true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
             </Or>
           </Expression>
         </DataSource>
@@ -824,6 +1078,24 @@ $bag]]></ScriptBody>
               <PathType>1</PathType>
               <AttributeType>1</AttributeType>
             </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcMajorVersion</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\Services\W3SVC\Parameters\MajorVersion</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcMinorVersion</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\Services\W3SVC\Parameters\MinorVersion</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>SvcUserName</AttributeName>
+              <Path>SYSTEM\CurrentControlSet\Services\W3SVC\ObjectName</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
           </RegistryAttributeDefinitions>
           <Frequency>86400</Frequency>
           <ClassId>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.IIS"]$</ClassId>
@@ -856,6 +1128,22 @@ $bag]]></ScriptBody>
               <Setting>
                 <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer"]/OU$</Name>
                 <Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/OrganizationalUnit$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer"]/SvcUserName$</Name>
+                <Value>$Data/Values/SvcUserName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.IIS"]/SvcMajorVersion$</Name>
+                <Value>$Data/Values/SvcMajorVersion$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.IIS"]/SvcMinorVersion$</Name>
+                <Value>$Data/Values/SvcMinorVersion$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows.Server.Webservice.BasicWatcher.Computer.IIS"]/SvcVersionCombined$</Name>
+                <Value>$Data/Values/SvcMajorVersion$.$Data/Values/SvcMinorVersion$</Value>
               </Setting>
             </Settings>
           </InstanceSettings>
@@ -963,16 +1251,16 @@ $bag]]></ScriptBody>
       </Discovery>
     </Discoveries>
     <Rules>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentProcessorTime" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.PercentMemoryUsed" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
-            <MonitorItem>httpd</MonitorItem>
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>serv-u</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
-          <InterestingCounter>PercentProcessorTime</InterestingCounter>
+          <InterestingCounter>PercentMemoryUsed</InterestingCounter>
           <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
           <CounterName>$Data/Property[@Name='Counter']$</CounterName>
           <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
@@ -987,7 +1275,7 @@ $bag]]></ScriptBody>
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>Tomcat</MonitorItem>
           </DataSource>
         </DataSources>
@@ -1003,16 +1291,16 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.WorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentMemoryUsed" Target="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>Tomcat</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
-          <InterestingCounter>WorkingSetPrivateMB</InterestingCounter>
+          <InterestingCounter>PercentMemoryUsed</InterestingCounter>
           <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
           <CounterName>$Data/Property[@Name='Counter']$</CounterName>
           <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
@@ -1023,12 +1311,12 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentProcessorTime" Target="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.PercentProcessorTime" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
-            <MonitorItem>Tomcat</MonitorItem>
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>svchost</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
@@ -1047,7 +1335,7 @@ $bag]]></ScriptBody>
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>Tomcat</MonitorItem>
           </DataSource>
         </DataSources>
@@ -1067,7 +1355,7 @@ $bag]]></ScriptBody>
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.IPConnections.Cookdown">
-            <IntervalSeconds>300</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>tomcat</MonitorItem>
           </DataSource>
         </DataSources>
@@ -1083,12 +1371,12 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.WorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTPWorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
-            <MonitorItem>httpd</MonitorItem>
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>serv-u</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
@@ -1103,12 +1391,12 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.IODataMBPerSec" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.IODataMBPerSec" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
-            <MonitorItem>httpd</MonitorItem>
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>serv-u</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
@@ -1123,16 +1411,16 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.WorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.IIS" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.PercentMemoryUsed" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>300</IntervalSeconds>
-            <MonitorItem>w3wp</MonitorItem>
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>svchost</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
-          <InterestingCounter>WorkingSetPrivateMB</InterestingCounter>
+          <InterestingCounter>PercentMemoryUsed</InterestingCounter>
           <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
           <CounterName>$Data/Property[@Name='Counter']$</CounterName>
           <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
@@ -1147,7 +1435,7 @@ $bag]]></ScriptBody>
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.IPConnections.Cookdown">
-            <IntervalSeconds>300</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>w3wp</MonitorItem>
           </DataSource>
         </DataSources>
@@ -1163,12 +1451,12 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.HandleCount" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.HandleCount" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>1800</IntervalSeconds>
-            <MonitorItem>httpd</MonitorItem>
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>serv-u</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
@@ -1183,12 +1471,12 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IODataMBPerSec" Target="Windows.Server.Webservice.BasicWatcher.Computer.IIS" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.IODataMBPerSec" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>300</IntervalSeconds>
-            <MonitorItem>w3wp</MonitorItem>
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>svchost</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
@@ -1207,8 +1495,168 @@ $bag]]></ScriptBody>
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>300</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>w3wp</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>PercentProcessorTime</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.HandleCount" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>svchost</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>HandleCount</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.IPConnections" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.IPConnections.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>svchost</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>ipConnections</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.PercentProcessorTime" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>serv-u</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>PercentProcessorTime</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.WorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>Tomcat</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>WorkingSetPrivateMB</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.WorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>svchost</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>WorkingSetPrivateMB</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.IPConnections" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.IPConnections.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>serv-u</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>ipConnections</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.PercentMemoryUsed" Target="Windows.Server.Webservice.BasicWatcher.Computer.IIS" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>w3wp</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>PercentMemoryUsed</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentProcessorTime" Target="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>Tomcat</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
@@ -1227,7 +1675,7 @@ $bag]]></ScriptBody>
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
-            <IntervalSeconds>300</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>w3wp</MonitorItem>
           </DataSource>
         </DataSources>
@@ -1243,16 +1691,156 @@ $bag]]></ScriptBody>
           <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IODataMBPerSec" Target="Windows.Server.Webservice.BasicWatcher.Computer.IIS" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>w3wp</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>IODataMBPerSec</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.WorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.IIS" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>w3wp</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>WorkingSetPrivateMB</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.WorkingSetPrivateMB" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>httpd</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>WorkingSetPrivateMB</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentProcessorTime" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>httpd</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>PercentProcessorTime</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentMemoryUsed" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>httpd</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>PercentMemoryUsed</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
       <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.IPConnections" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
         <Category>None</Category>
         <DataSources>
           <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.IPConnections.Cookdown">
-            <IntervalSeconds>300</IntervalSeconds>
+            <IntervalSeconds>900</IntervalSeconds>
             <MonitorItem>httpd</MonitorItem>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
           <InterestingCounter>ipConnections</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.IODataMBPerSec" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>httpd</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>IODataMBPerSec</InterestingCounter>
+          <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
+          <CounterName>$Data/Property[@Name='Counter']$</CounterName>
+          <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
+          <Value>$Data/Property[@Name='Value']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+      <Rule ID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.HandleCount" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>None</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="BasicWatcher.WebService.DataSource.KPIs.Cookdown">
+            <IntervalSeconds>900</IntervalSeconds>
+            <MonitorItem>httpd</MonitorItem>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Basic.WebService.SpecificCounterPerfFilterMapper">
+          <InterestingCounter>HandleCount</InterestingCounter>
           <ObjectName>$Data/Property[@Name='Objekt']$</ObjectName>
           <CounterName>$Data/Property[@Name='Counter']$</CounterName>
           <InstanceName>$Data/Property[@Name='Instance']$</InstanceName>
@@ -2049,13 +2637,19 @@ objAPI.ReturnItems]]></ScriptBody>
       <View ID="Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.Apache" Accessibility="Internal" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Visible="true">
         <Category>Operations</Category>
       </View>
-      <View ID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web" Accessibility="Internal" Target="Windows.Server.Webservice.BasicWatcher.Computer.IIS" TypeID="SC!Microsoft.SystemCenter.PerformanceViewType" Visible="true">
+      <View ID="Windows.Server.Webservice.BasicWatcher.View.Perf.ServU.FTP" Accessibility="Internal" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.ServU" TypeID="SC!Microsoft.SystemCenter.PerformanceViewType" Visible="true">
         <Category>Operations</Category>
       </View>
       <View ID="Windows.Server.Webservice.BasicWatcher.View.Perf.ApacheTomcat" Accessibility="Internal" Target="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" TypeID="SC!Microsoft.SystemCenter.PerformanceViewType" Visible="true">
         <Category>Operations</Category>
       </View>
       <View ID="Windows.Server.Webservice.BasicWatcher.View.Perf.Apache" Accessibility="Internal" Target="Windows.Server.Webservice.BasicWatcher.Computer.Apache" TypeID="SC!Microsoft.SystemCenter.PerformanceViewType" Visible="true">
+        <Category>Operations</Category>
+      </View>
+      <View ID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web" Accessibility="Internal" Target="Windows.Server.Webservice.BasicWatcher.Computer.IIS" TypeID="SC!Microsoft.SystemCenter.PerformanceViewType" Visible="true">
+        <Category>Operations</Category>
+      </View>
+      <View ID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.FTP" Accessibility="Internal" Target="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS" TypeID="SC!Microsoft.SystemCenter.PerformanceViewType" Visible="true">
         <Category>Operations</Category>
       </View>
     </Views>
@@ -2076,9 +2670,11 @@ objAPI.ReturnItems]]></ScriptBody>
       <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.IIS" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Alerts" ID="Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.IIS.FolderItem" />
       <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.ApacheTomcat" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Alerts" ID="Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.ApacheTomcat.FolderItem" />
       <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.Apache" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Alerts" ID="Windows.Server.Webservice.BasicWatcher.View.Alerts.WebService.Apache.FolderItem" />
-      <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Performance" ID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web.FolderItem" />
+      <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.ServU.FTP" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Performance" ID="Windows.Server.Webservice.BasicWatcher.View.Perf.ServU.FTP.FolderItem" />
       <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.ApacheTomcat" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Performance" ID="Windows.Server.Webservice.BasicWatcher.View.Perf.ApacheTomcat.FolderItem" />
       <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.Apache" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Performance" ID="Windows.Server.Webservice.BasicWatcher.View.Perf.Apache.FolderItem" />
+      <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Performance" ID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web.FolderItem" />
+      <FolderItem ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.FTP" Folder="Windows.Server.Webservice.BasicWatcher.Folders.Performance" ID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.FTP.FolderItem" />
     </FolderItems>
     <StringResources>
       <StringResource ID="Windows.Server.Webservice.BasicWatcher.Monitor.WebService.ApacheTomcat.AlertMessage" />
@@ -2261,20 +2857,20 @@ Result: {4}</Description>
           <Name>Success</Name>
           <Description>Success</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentProcessorTime">
-          <Name>Collect Apache Percent Processor Time</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.PercentMemoryUsed">
+          <Name>Collect Serv-U FTP Percent Memory Used</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.IODataMBPerSec">
           <Name>Collect ApacheTomcat IO Data MB Per Sec</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.WorkingSetPrivateMB">
-          <Name>Collect Apache Tomcat WorkingSet Private MB</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentMemoryUsed">
+          <Name>Collect Apache Tomcat Percent Mermory Used</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentProcessorTime">
-          <Name>Collect ApacheTomcat Percent ProcessorTime</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.PercentProcessorTime">
+          <Name>Collect IIS FTP Percent ProcessorTime</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.HandleCount">
@@ -2285,40 +2881,100 @@ Result: {4}</Description>
           <Name>Collect ApacheTomcat Unique IPConnections</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.WorkingSetPrivateMB">
-          <Name>Collect Apache WorkingSetPrivate MB</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTPWorkingSetPrivateMB">
+          <Name>Collect Serv-U FTP WorkingSetPrivate MB</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.IODataMBPerSec">
-          <Name>Collect Apache IO Data MB Per Sec</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.IODataMBPerSec">
+          <Name>Collect Serv-U FTP IO Data MB Per Sec</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.WorkingSetPrivateMB">
-          <Name>Collect IIS Web WorkingSetPrivateMB</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.PercentMemoryUsed">
+          <Name>Collect IIS FTP PercentMemoryUsed</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IPConnections">
           <Name>Collect IIS Web Unique IPConnections</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.HandleCount">
-          <Name>Collect Apache Handle Count</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.HandleCount">
+          <Name>Collect Serv-U FTP Handle Count</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IODataMBPerSec">
-          <Name>Collect IIS Web IODataMBPerSec</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.IODataMBPerSec">
+          <Name>Collect IIS FTP IODataMBPerSec</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.PercentProcessorTime">
           <Name>Collect IIS Web Percent ProcessorTime</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.HandleCount">
+          <Name>Collect IIS FTP Handle Count</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.IPConnections">
+          <Name>Collect IIS FTP Unique IPConnections</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.PercentProcessorTime">
+          <Name>Collect Serv-U FTP Percent Processor Time</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.WorkingSetPrivateMB">
+          <Name>Collect Apache Tomcat WorkingSet Private MB</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.FTP.WorkingSetPrivateMB">
+          <Name>Collect IIS FTP WorkingSetPrivateMB</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ServU.FTP.IPConnections">
+          <Name>Collect Serv-U FTP Unique IPConnections</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.PercentMemoryUsed">
+          <Name>Collect IIS Web PercentMemoryUsed</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.ApacheTomcat.PercentProcessorTime">
+          <Name>Collect ApacheTomcat Percent ProcessorTime</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.HandleCount">
           <Name>Collect IIS Web Handle Count</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.IODataMBPerSec">
+          <Name>Collect IIS Web IODataMBPerSec</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.IIS.Web.WorkingSetPrivateMB">
+          <Name>Collect IIS Web WorkingSetPrivateMB</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.WorkingSetPrivateMB">
+          <Name>Collect Apache WorkingSetPrivate MB</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentProcessorTime">
+          <Name>Collect Apache Percent Processor Time</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.PercentMemoryUsed">
+          <Name>Collect Apache Percent Memory Used</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.IPConnections">
           <Name>Collect Apache Unique IPConnections</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.IODataMBPerSec">
+          <Name>Collect Apache IO Data MB Per Sec</Name>
+          <Description>Description for the new rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Perf.Apache.HandleCount">
+          <Name>Collect Apache Handle Count</Name>
           <Description>Description for the new rule</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Folders">
@@ -2377,8 +3033,8 @@ Result: {4}</Description>
           <Name>Web - Apache</Name>
           <Description>Description for the new view</Description>
         </DisplayString>
-        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web">
-          <Name>Web - IIS</Name>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.ServU.FTP">
+          <Name>FTP - Serv-U</Name>
           <Description>Description for the new view</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.ApacheTomcat">
@@ -2387,6 +3043,14 @@ Result: {4}</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.Apache">
           <Name>Web - Apache</Name>
+          <Description>Description for the new view</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.Web">
+          <Name>Web - IIS</Name>
+          <Description>Description for the new view</Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.View.Perf.IIS.FTP">
+          <Name>FTP - IIS</Name>
           <Description>Description for the new view</Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher">
@@ -2417,16 +3081,48 @@ Result: {4}</Description>
           <Name>OU</Name>
           <Description></Description>
         </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer" SubElementID="SvcUserName">
+          <Name>Service User Name</Name>
+          <Description></Description>
+        </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS">
           <Name>Windows Server Webservice BasicWatcher Computer - IIS</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" SubElementID="SvcMajorVersion">
+          <Name>Service Major Version</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" SubElementID="SvcMinorVersion">
+          <Name>Service Minor Version</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.IIS" SubElementID="SvcVersionCombined">
+          <Name>Service Version</Name>
           <Description></Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.Apache">
           <Name>Windows Server Webservice BasicWatcher Computer - Apache</Name>
           <Description></Description>
         </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" SubElementID="SvcDescription">
+          <Name>Service Description</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.Apache" SubElementID="SvcDisplayName">
+          <Name>Service DisplayName</Name>
+          <Description></Description>
+        </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat">
           <Name>Windows Server Webservice BasicWatcher Computer - ApacheTomcat</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" SubElementID="SvcDescription">
+          <Name>Service Description</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.ApacheTomcat" SubElementID="SvcDisplayName">
+          <Name>Service DisplayName</Name>
           <Description></Description>
         </DisplayString>
         <DisplayString ElementID="Windows.Server.Webservice.BasicWatcher.Computer.FTP.IIS">

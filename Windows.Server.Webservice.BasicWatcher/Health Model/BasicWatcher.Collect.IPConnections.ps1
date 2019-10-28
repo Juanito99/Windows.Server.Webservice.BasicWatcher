@@ -111,7 +111,14 @@ $netStatIPConnects = New-Object -TypeName System.Collections.Generic.List[object
 Format-NetstatData -netstatInPut $netStatIp -nestatIPData ([ref]$netStatIPConnects)
 
 $ipConnections = ''
-$ipConnections = $netStatIPConnects | Where-Object {$_.procPath -match "(?i)[\\]$MonitorItem" -or $_.procName  -match "(?i)$MonitorItem"}
+
+#if svchost - check for port, otherwise use name to find the right process
+if ($MonitorItem -ieq 'svchost') {
+	$ipConnections = $netStatIPConnects | Where-Object {$_.localPort -eq "21"}
+} else {
+	$ipConnections = $netStatIPConnects | Where-Object {$_.procPath -match "(?i)[\\]$MonitorItem" -or $_.procName  -match "(?i)$MonitorItem"}
+}
+
 
 if ($ipConnections -ne '') {	
 	#$api.LogScriptEvent('BasicWatcher.Collect.IPConnections.ps1',351,4,"Searching for $($MonitorItem) found no: $($ipConnections.Count) IPConnections")	
